@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注文リスト削除確認　| 業務管理アプリケーション</title>
+  <!-- Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h1 class="mb-3 text-center">注文リスト削除確認</h1>
+  <p class="text-center">以下の注文を削除しますか？</p>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>注文番号:</strong></div>
+    <div class="col-md-4" th:text="${order.orderId}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>納入日付:</strong></div>
+    <div class="col-md-4" th:text="${order.orderDate}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>会社番号:</strong></div>
+    <div class="col-md-4" th:text="${order.companyNo}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>品物番号:</strong></div>
+    <div class="col-md-4" th:text="${order.itemNo}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>品物:</strong></div>
+    <div class="col-md-4" th:text="${order.item}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>数量:</strong></div>
+    <div class="col-md-4" th:text="${order.quantity}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>単価:</strong></div>
+    <div class="col-md-1" th:text="${order.unitPrice}"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 offset-md-3"><strong>金額:</strong></div>
+    <div class="col-md-1" th:text="${order.price}"></span></div>
+  </div>
+
+  <form class="text-center mt-3" th:action="@{/orders/delete/{orderId}(orderId=${order.orderId})}" method="post">
+    <button type="submit" class="btn btn-danger">削除</button>
+    <a th:href="@{/orders}" class="btn btn-secondary ml-2">取消</a>
+  </form>
+</div>
+</body>
+</html>
