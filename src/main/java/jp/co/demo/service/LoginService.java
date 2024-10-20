@@ -5,24 +5,23 @@ import jp.co.demo.users.User;
 import jp.co.demo.users.UserDetailsImpl;
 import jp.co.demo.users.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class LoginService implements UserDetailsService {
+//public class LoginService implements UserDetailsService {
+public class LoginService {
 
     private UserRepository repository;
+//
+//    private PasswordEncoder passwordEncoder;
 
-    private PasswordEncoder passwordEncoder;
-
-    public LoginService(UserRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
+//    public LoginService(UserRepository repository, PasswordEncoder passwordEncoder) {
+//        this.repository = repository;
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
 //    @Autowired
 //    String idForEncode = "bcrypt";
@@ -46,7 +45,7 @@ public class LoginService implements UserDetailsService {
 //        return  true;
 //    }
 
-    @Override
+//    @Override
     @Transactional
     public UserDetailsImpl loadUserByUsername(String userId)
             throws UsernameNotFoundException {
@@ -54,7 +53,7 @@ public class LoginService implements UserDetailsService {
             throw new UsernameNotFoundException("UserId is empty");
         }
 
-        User user = this.repository.findByUserId(userId);
+        User user = repository.findByUserId(userId);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + userId);
         }
