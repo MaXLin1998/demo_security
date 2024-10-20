@@ -158,7 +158,7 @@ if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
     esac
 fi
 
-# Collect all arguments for the java command, stacking in reverse order:
+# Collect all arguments for the java command, stacking in reverse service:
 #   * args from the command line
 #   * the main class name
 #   * -classpath
