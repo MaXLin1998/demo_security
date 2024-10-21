@@ -2,12 +2,10 @@ package jp.co.demo.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jp.co.demo.service.GetUsersService;
+import jp.co.demo.repository.User;
 import jp.co.demo.service.LoginService;
-import jp.co.demo.users.UserDetailsImpl;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import jp.co.demo.repository.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,28 +16,29 @@ import org.thymeleaf.util.StringUtils;
 
 @Controller
 //@RequestMapping("/login")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class LoginController {
-    private final LoginService loginService;
+    @Autowired
+    private LoginService loginService;
 
-   private final GetUsersService usersService;
+//   private final GetUsersService usersService;
     /**
      * ログイン成功時に呼び出されるメソッド
      * SecurityContextHolderから認証済みユーザの情報を取得しモデルへ追加する
      * @param model リクエストスコープ上にオブジェクトを載せるためのmap
      * @return helloページのViewName
      */
-    @RequestMapping("order/list")
-    private String showList(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //Principalからログインユーザの情報を取得
-        String userName = auth.getName();
-        model.addAttribute("userName", userName);
-        return "order/list";
-
-    }
-
-     private final PasswordEncoder passwordEncoder;
+//    @RequestMapping("order/list")
+//    private String showList(Model model) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        //Principalからログインユーザの情報を取得
+//        String userName = auth.getName();
+//        model.addAttribute("userName", userName);
+//        return "order/list";
+//
+//    }
+     @Autowired
+     private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/")
     public String index() {
@@ -61,12 +60,17 @@ public class LoginController {
             return "login";
         }
 
-        UserDetailsImpl userDetailsImpl  = loginService.loadUserByUsername(username);
-        if (null == userDetailsImpl){
+        String encoded = passwordEncoder.encode(rawPsw);
+        User user  = loginService.loadUserByUserInfo(username, encoded);
+        if (null == user){
             return "redirect:/login-error";
         }
 
-        String encoded = passwordEncoder.encode(rawPsw);
+
+//        boolean isAuthed = userDetailsImpl.isAuthorUser(username, encoded);
+//        if (!isAuthed) {
+//            return "redirect:/login-error";
+//        }
 
         // サインアップ後の自動ログイン処理省略 (GitHub上のソースコードを見てください)
         return "redirect:/top";

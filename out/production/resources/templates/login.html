@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>ログイン</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-group">
+        <div class="logo">
+            <img th:src="@{/img/login.jpg}" alt="XXXロゴ">
+        </div>
+        <div class="title">
+            <h3>Example: Login page</h3>
+        </div>
+    </div>
+
+    <div class="login-form">
+        <form th:action="@{/login}" method="post">
+            <!--/* ログインエラー時にメッセージを表示 */-->
+            <div th:if="${param.error}" class="alert alert-danger">
+                名前またはパスワードが正しくありません
+            </div>
+            <table class="table table-bordered col-md-6">
+                <tr class="form-group">
+                    <th class="align-middle">ユーザー名</th>
+                    <td><input type="text" class="form-controll" name="username"></td>
+                </tr>
+                <tr class="form-group">
+                    <th class="align-middle">パスワード</th>
+                    <td><input type="password" class="form-controll" name="password"></td>
+                </tr>
+            </table>
+            <div class="submit">
+                <input type="submit" class="btn btn-primary" value="ログイン">
+            </div>
+        </form>
+    </div>
+
+<!--<p><a th:href="@{/signup}">Sign up</a></p>-->
+<!--<p><a th:href="@{/}">Back to index</a></p>-->
+</div>
+<script src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

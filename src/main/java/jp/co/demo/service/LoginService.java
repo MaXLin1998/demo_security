@@ -1,68 +1,11 @@
 package jp.co.demo.service;
 
-import ch.qos.logback.core.util.StringUtil;
-import jp.co.demo.users.User;
-import jp.co.demo.users.UserDetailsImpl;
-import jp.co.demo.users.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import jp.co.demo.repository.User;
+import jp.co.demo.repository.UserDetailsImpl;
 
-@Service
-@RequiredArgsConstructor
-//public class LoginService implements UserDetailsService {
-public class LoginService {
-
-    private UserRepository repository;
-//
-//    private PasswordEncoder passwordEncoder;
-
-//    public LoginService(UserRepository repository, PasswordEncoder passwordEncoder) {
-//        this.repository = repository;
-//        this.passwordEncoder = passwordEncoder;
-//    }
-
-//    @Autowired
-//    String idForEncode = "bcrypt";
-//    private final PasswordEncoder passwordEncoder =
-//            new DelegatingPasswordEncoder(idForEncode,
-//                 Map.of(idForEncode, new BCryptPasswordEncoder()));
-
-//    public boolean AuthExecute(String userId,String userPsw) {
-//        if (StringUtil.isNullOrEmpty(userId)) {
-//            throw new UsernameNotFoundException("UserId is empty");
-//        }
-//
-//        User user = repository.findByUserId(userId);
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User not found: " + userId);
-//        }
-//
-//        UserDetailsImpl userImpl = new UserDetailsImpl(user);
-//        userImpl.getAuthorities();
-//
-//        return  true;
-//    }
-
+public interface LoginService {
 //    @Override
-    @Transactional
-    public UserDetailsImpl loadUserByUsername(String userId)
-            throws UsernameNotFoundException {
-        if (StringUtil.isNullOrEmpty(userId)) {
-            throw new UsernameNotFoundException("UserId is empty");
-        }
-
-        User user = repository.findByUserId(userId);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + userId);
-        }
-
-        UserDetailsImpl userAuthEx = new UserDetailsImpl(user);
-//        this.repository.findByUserId(userId);
-
-        return userAuthEx;
-    }
+public User loadUserByUserInfo(String userId, String password);
 
     //adminを登録するメソッド
 //    @Transactional
