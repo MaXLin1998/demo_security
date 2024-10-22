@@ -5,7 +5,9 @@ import jp.co.demo.repository.UserDetailsImpl;
 
 public interface LoginService {
 //    @Override
-public User loadUserByUserInfo(String userId, String password);
+public User loadUserByUserInfo(String userId);
+
+public int updateFailedCount(String userId, int failedCount);
 
     //adminを登録するメソッド
 //    @Transactional

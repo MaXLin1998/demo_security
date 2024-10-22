@@ -33,6 +33,9 @@ public class User {
     @Column(name = "user_role")
     private String userRole;
 
+    @Column(name = "failed_count")
+    private int failedCount;
+
     @Column(name = "create_date")
     private Date createDate;
 

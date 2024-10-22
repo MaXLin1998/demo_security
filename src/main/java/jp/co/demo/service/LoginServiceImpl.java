@@ -1,6 +1,5 @@
 package jp.co.demo.service;
 
-import ch.qos.logback.core.util.StringUtil;
 import jp.co.demo.repository.User;
 import jp.co.demo.repository.UserDetailsImpl;
 import jp.co.demo.repository.UserRepository;
@@ -48,22 +47,18 @@ public class LoginServiceImpl implements  LoginService {
 
 //    @Override
     @Transactional
-    public User loadUserByUserInfo(String userId,String password)
+    public User loadUserByUserInfo(String userId)
             throws UsernameNotFoundException {
-        if (StringUtil.isNullOrEmpty(userId)) {
-            throw new UsernameNotFoundException("UserId is empty");
-        }
-//        int test = repository.findByUserId1();
-        User user = repository.findUser(userId,password);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + userId);
-        }
-
 //        UserDetailsImpl userAuthEx = new UserDetailsImpl(user);
 //        this.repository.findByUserId(userId);
 
-        return user;
+        return repository.findUser(userId);
 //        return  null;
+    }
+
+    @Transactional
+    public int updateFailedCount(String userId, int failedCount) {
+        return repository.updateFailedCount(userId, failedCount);
     }
 
     //adminを登録するメソッド

@@ -61,11 +61,31 @@ public class LoginController {
         }
 
         String encoded = passwordEncoder.encode(rawPsw);
-        User user  = loginService.loadUserByUserInfo(username, encoded);
+        System.out.println("pswEncoded: "+encoded);
+
+        User user  = loginService.loadUserByUserInfo(username);
+        // 会員が存在しない場合、
         if (null == user){
             return "redirect:/login-error";
         }
 
+        // 失敗回数の取得
+        int failedCount = user.getFailedCount();
+
+        // パスワードが不一致である場合
+        if (!passwordEncoder.matches(rawPsw, user.getUserPsw())) {
+            // ログイン失敗回数のチェック
+            if (user.getFailedCount() > 5) {
+                return "redirect:/login-error";
+            } else {
+                failedCount = failedCount + 1;
+                loginService.updateFailedCount(username, failedCount);
+                return "redirect:/login-error";
+            }
+        } else {
+            failedCount = 0;
+            loginService.updateFailedCount(username, failedCount);
+        }
 
 //        boolean isAuthed = userDetailsImpl.isAuthorUser(username, encoded);
 //        if (!isAuthed) {
